@@ -1,0 +1,28 @@
+<h1>Hello, Rails!</h1>
+<% if user_signed_in? %>
+  Logged in as <strong><%= current_user.name %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> 
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> 
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+<% if current_user && current_user.seller%>
+ <%= link_to 'Create FoodItems', new_food_item_path, :class => 'navbar-link' %> 
+ <%= link_to  "Orders", orders_path %>
+<% end %>
+
+
+<% if current_user %>
+ <% @foods.each do |f| %>
+	 <%= f.name %>
+	 <%= f.description %>
+	 <%= f.price.to_f %>
+	 <%= link_to "Apply", apply_path(f)%>
+	 <%= link_to "Cancel", cancel_path(f)%>
+	 <% if can? :manage, f %>
+		 	<%= link_to 'Edit Item', edit_food_item_path(f)%>
+		 	<%= link_to 'delete Item', food_item_path(f), method: :delete, data: { confirm: 'Are you certain you want to delete this?' }%>
+	 <% end %>
+ <% end%>
+<% end %>

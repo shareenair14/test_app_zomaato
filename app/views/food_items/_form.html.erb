@@ -1,0 +1,6 @@
+<%= form_with model: @food_item, local: true do |form| %>
+  <%= form.text_field :name %>
+  <%= form.text_area :description%>
+  <%= form.number_field :price %>
+  <%= form.submit %>
+<% end %>
